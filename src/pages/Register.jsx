@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Wrapper from '../assets/wrappers/RegisterPage'
 import { useSelector, useDispatch } from 'react-redux'
+
+// router-dom
+import { useNavigate } from 'react-router-dom';
 
 // async actions
 import { registerUser, loginUser } from '../feature/user/userSlice'
@@ -17,10 +20,20 @@ const initialValues = {
   password: '',
   isMember: true,
 }
+
 const Register = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { user, isLoading } = useSelector((state) => state.user)
+
+  useEffect(()=>{
+    if(user){
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+    }
+  }, [user, navigate])
 
   const [values, setValues] = useState(initialValues)
 
@@ -33,6 +46,7 @@ const Register = () => {
       toast.error('Please Fill Out All Fields')
       return
     }
+    
     if (!isMember) {
       dispatch(loginUser({ email, password }))
     } else {
