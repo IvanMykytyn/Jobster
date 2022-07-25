@@ -1,24 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Wrapper from '../../assets/wrappers/SharedLayout'
 
 // router-dom
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet} from 'react-router-dom'
 
 // components
 import { Navbar, BigSidebar, SmallSidebar } from '../../components'
-import { useSelector } from 'react-redux'
 
 const SharedLayout = () => {
-  const navigate = useNavigate()
-  const { user } = useSelector((state) => state.user)
-
-  useEffect(() => {
-    if (!user) {
-      setTimeout(() => {
-        navigate('/landing')
-      })
-    }
-  }, [user, navigate])
 
   return (
     <Wrapper>

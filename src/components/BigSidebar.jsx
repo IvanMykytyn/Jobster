@@ -1,25 +1,27 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import Wrapper from '../assets/wrappers/BigSidebar'
 
 // components
-import {Logo} from './'
+import {Logo, NavLinks} from './'
 
 const BigSidebar = () => {
-  const isSidebarOpen = false;
+  const {isSidebarOpen} = useSelector(state => state.user);
+  
   return (
     <Wrapper>
       <div
         className={
           isSidebarOpen
-            ? 'sidebar-container '
-            : 'sidebar-container show-sidebar'
+            ? 'sidebar-container show-sidebar'
+            : 'sidebar-container'
         }
       >
         <div className="content">
           <header>
             <Logo />
           </header>
-          {/* <NavLinks /> */}
+          <NavLinks />
         </div>
       </div>
     </Wrapper>

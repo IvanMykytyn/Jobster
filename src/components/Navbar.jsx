@@ -9,7 +9,7 @@ import { Logo } from './'
 import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa'
 
 // actions
-import { logout } from '../feature/user/userSlice'
+import { logout, toggleSidebar } from '../feature/user/userSlice'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -25,7 +25,7 @@ const Navbar = () => {
         <button
           type="button"
           className="toggle-btn"
-          onClick={() => console.log('toggle sidebar')}
+          onClick={() => dispatch(toggleSidebar())}
         >
           <FaAlignLeft />
         </button>

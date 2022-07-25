@@ -13,6 +13,7 @@ import { toast } from 'react-toastify'
 const initialState = {
   isLoading: false,
   user: getUserFromLocalStorage(),
+  isSidebarOpen: true,
 }
 
 export const registerUser = createAsyncThunk(
@@ -44,8 +45,15 @@ const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null
+      state.isSidebarOpen = false;
       removeUserFromLocalStorage()
-    }
+      toast.success(`Successfully Logged Out`)
+
+    },
+    toggleSidebar: (state) => {
+      state.isSidebarOpen = !state.isSidebarOpen
+    },
+
   },
   extraReducers: {
     // register 
@@ -83,6 +91,6 @@ const userSlice = createSlice({
     },
   },
 })
-export const { logout } = userSlice.actions
+export const { logout, toggleSidebar } = userSlice.actions
 
 export default userSlice.reducer
