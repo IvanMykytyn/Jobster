@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import Wrapper from '../assets/wrappers/RegisterPage'
+import { useSelector, useDispatch } from 'react-redux'
+
+// async actions
+import { registerUser, loginUser } from '../feature/user/userSlice'
 
 // components
 import { Logo, FormRow } from '../components'
 
-// toastify 
-import { toast } from 'react-toastify';
+// toastify
+import { toast } from 'react-toastify'
 
 const initialValues = {
   name: '',
@@ -14,21 +18,27 @@ const initialValues = {
   isMember: true,
 }
 const Register = () => {
+  const dispatch = useDispatch()
+
+  const { user, isLoading } = useSelector((state) => state.user)
+
   const [values, setValues] = useState(initialValues)
 
   const onSubmit = (e) => {
     e.preventDefault()
 
-    const {name, email, password, isMember} = values
+    const { name, email, password, isMember } = values
 
-    if(!email || !password || (!isMember && !name)){
-        toast.error('Please Fill Out All Fields');
-        return
+    if (!email || !password || (isMember && !name)) {
+      toast.error('Please Fill Out All Fields')
+      return
     }
-  
-    console.log(e.target)
+    if (!isMember) {
+      dispatch(loginUser({ email, password }))
+    } else {
+      dispatch(registerUser({ name, email, password }))
+    }
   }
-
 
   const handleChange = (e) => {
     setValues((prevValues) => ({
@@ -38,7 +48,7 @@ const Register = () => {
   }
 
   const toggleMember = () => {
-    setValues(prevValues => ({...prevValues, isMember: !values.isMember}))
+    setValues((prevValues) => ({ ...prevValues, isMember: !values.isMember }))
   }
 
   return (
@@ -72,6 +82,9 @@ const Register = () => {
           name="password"
           onChange={handleChange}
         />
+        <button type="submit" className="btn btn-block">
+          submit
+        </button>
         <p>
           {values.isMember ? 'Not a member yet?' : 'Already a member?'}
 
@@ -79,9 +92,7 @@ const Register = () => {
             {values.isMember ? 'Register' : 'Login'}
           </button>
         </p>
-        <button type='submit' className='btn btn-block'>
-          submit
-        </button>
+        
       </form>
     </Wrapper>
   )
