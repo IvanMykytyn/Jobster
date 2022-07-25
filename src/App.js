@@ -3,6 +3,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 // pages
 import { Error, Dashboard, Landing, Register } from './pages'
 
+// toastify setup
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -14,6 +19,7 @@ const App = () => {
           <Route path="*" element={<Error/>} />
         </Route>
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   )
 }
