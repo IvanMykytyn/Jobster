@@ -1,14 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-// axios setup
-import customFetch from '../../utils/axios'
-
 // local storage
-import { addUserToLocalStorage, getUserFromLocalStorage, removeUserFromLocalStorage } from '../../utils/localStorage'
+import {
+  addUserToLocalStorage,
+  getUserFromLocalStorage,
+  removeUserFromLocalStorage,
+} from '../../utils/localStorage'
 
 // toastify
 import { toast } from 'react-toastify'
 
+// thunks
+import { registerUserThunk, loginUserThunk, updateUserThunk } from './userThunk'
 
 const initialState = {
   isLoading: false,
@@ -19,23 +22,21 @@ const initialState = {
 export const registerUser = createAsyncThunk(
   'user/registerUser',
   async (user, thunkAPI) => {
-    try {
-      const response = await customFetch.post('/auth/register', user)
-      return response.data
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg)
-    }
+    return registerUserThunk(user, thunkAPI)
   }
 )
+
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async (user, thunkAPI) => {
-    try {
-      const response = await customFetch.post('/auth/login', user)
-      return response.data
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg)
-    }
+    return loginUserThunk(user, thunkAPI)
+  }
+)
+
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
+  async (user, thunkAPI) => {
+    return updateUserThunk(user, thunkAPI)
   }
 )
 
@@ -45,23 +46,21 @@ const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null
-      state.isSidebarOpen = false;
+      state.isSidebarOpen = false
       removeUserFromLocalStorage()
       toast.success(`Successfully Logged Out`)
-
     },
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen
     },
-
   },
   extraReducers: {
-    // register 
+    // register
     [registerUser.pending]: (state) => {
       state.isLoading = true
     },
     [registerUser.fulfilled]: (state, { payload }) => {
-      const {user} = payload
+      const { user } = payload
       state.user = user
       state.isLoading = false
       addUserToLocalStorage(user)
@@ -78,7 +77,7 @@ const userSlice = createSlice({
       state.isLoading = true
     },
     [loginUser.fulfilled]: (state, { payload }) => {
-      const {user} = payload
+      const { user } = payload
       state.user = user
       state.isLoading = false
       addUserToLocalStorage(user)
@@ -86,6 +85,22 @@ const userSlice = createSlice({
       toast.success(`Welcome Back ${user.name}`)
     },
     [loginUser.rejected]: (state, { payload }) => {
+      state.isLoading = false
+      toast.error(payload)
+    },
+
+    // Update User
+    [updateUser.pending]: (state) => {
+      state.isLoading = true
+    },
+    [updateUser.fulfilled]: (state, { payload }) => {
+      const { user } = payload
+      state.user = user
+      state.isLoading = false
+      addUserToLocalStorage(user)
+      toast.success('User Updated')
+    },
+    [updateUser.rejected]: (state, { payload }) => {
       state.isLoading = false
       toast.error(payload)
     },
