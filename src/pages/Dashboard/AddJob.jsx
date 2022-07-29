@@ -10,7 +10,12 @@ import { FormRow, FormRowSelect } from '../../components'
 import { toast } from 'react-toastify'
 
 // actions
-import { handleChange, clearValues, addJob } from '../../feature/job/jobSlice'
+import {
+  handleChange,
+  clearValues,
+  addJob,
+  editJob,
+} from '../../feature/job/jobSlice'
 
 const AddJob = () => {
   const {
@@ -36,7 +41,8 @@ const AddJob = () => {
       return
     }
 
-    dispatch(addJob())
+    if (isEditing) dispatch(editJob())
+    else dispatch(addJob())
   }
 
   const handleJobInput = (e) => {
