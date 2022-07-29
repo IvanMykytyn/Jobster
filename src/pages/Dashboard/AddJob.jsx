@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
 import { useSelector, useDispatch } from 'react-redux'
@@ -44,7 +45,7 @@ const AddJob = () => {
 
   useEffect(() => {
     if (!isEditing) {
-      dispatch(handleChange({ name: 'jobLocation', value: user.location }));
+      dispatch(handleChange({ name: 'jobLocation', value: user.location }))
     }
   }, [])
 
