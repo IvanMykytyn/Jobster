@@ -3,7 +3,7 @@ import Wrapper from '../assets/wrappers/RegisterPage'
 import { useSelector, useDispatch } from 'react-redux'
 
 // router-dom
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 // async actions
 import { registerUser, loginUser } from '../feature/user/userSlice'
@@ -27,11 +27,11 @@ const Register = () => {
 
   const { user, isLoading } = useSelector((state) => state.user)
 
-  useEffect(()=>{
-    if(user){
+  useEffect(() => {
+    if (user) {
       setTimeout(() => {
-        navigate('/');
-      }, 2000);
+        navigate('/')
+      }, 2000)
     }
   }, [user, navigate])
 
@@ -46,7 +46,7 @@ const Register = () => {
       toast.error('Please Fill Out All Fields')
       return
     }
-    
+
     if (!isMember) {
       dispatch(loginUser({ email, password }))
     } else {
@@ -99,6 +99,18 @@ const Register = () => {
         <button type="submit" className="btn btn-block">
           submit
         </button>
+        <button
+          type="button"
+          className="btn btn-block btn-hipster"
+          disabled={isLoading}
+          onClick={() => {
+            dispatch(
+              loginUser({ email: 'testUser@test.com', password: 'secret' })
+            )
+          }}
+        >
+          {isLoading ? 'loading...' : 'demo'}
+        </button>
         <p>
           {values.isMember ? 'Not a member yet?' : 'Already a member?'}
 
@@ -106,7 +118,6 @@ const Register = () => {
             {values.isMember ? 'Register' : 'Login'}
           </button>
         </p>
-        
       </form>
     </Wrapper>
   )

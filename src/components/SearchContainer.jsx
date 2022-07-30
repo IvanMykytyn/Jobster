@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
+
 import Wrapper from '../assets/wrappers/SearchContainer'
 import { useSelector, useDispatch } from 'react-redux'
+import { debounce } from 'lodash'
 
 // components
 import { FormRow, FormRowSelect } from './'
@@ -15,13 +17,22 @@ const SearchContainer = () => {
   const { jobTypeOptions, statusOptions } = useSelector((store) => store.job)
 
   const handleSearch = (e) => {
-    if (isLoading) return;
     dispatch(handleChange({ name: e.target.name, value: e.target.value }))
   }
   const handleClear = () => {
-    if (isLoading) return;
+    if (isLoading) return
     dispatch(clearValues())
   }
+
+  const debouncedResults = useMemo(() => {
+    return debounce(handleSearch, 300)
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel()
+    }
+  }, [search])
 
   return (
     <Wrapper>
@@ -33,8 +44,8 @@ const SearchContainer = () => {
           <FormRow
             type="text"
             name="search"
-            value={search}
-            handleChange={handleSearch}
+            // value={search}
+            handleChange={debouncedResults}
           />
           {/* search by status */}
           <FormRowSelect
@@ -61,7 +72,7 @@ const SearchContainer = () => {
           />
           <button
             className="btn btn-block btn-danger"
-            type='button'
+            type="button"
             disabled={isLoading}
             onClick={handleClear}
           >
