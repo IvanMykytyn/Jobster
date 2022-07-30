@@ -4,12 +4,8 @@ import { toast } from 'react-toastify'
 // thunk
 import { addJobThunk, editJobThunk } from './jobThunk'
 
-export const addJob = createAsyncThunk('job/addJob', async (_, thunkAPI) => {
-  return addJobThunk(thunkAPI)
-})
-export const editJob = createAsyncThunk('job/editJob', async (_, thunkAPI) => {
-  return editJobThunk(thunkAPI)
-})
+export const addJob = createAsyncThunk('job/addJob', addJobThunk)
+export const editJob = createAsyncThunk('job/editJob', editJobThunk)
 
 const initialState = {
   isLoading: false,
@@ -40,7 +36,6 @@ const jobSlice = createSlice({
     setEditJob: (state, { payload }) => {
       return { ...state, isEditing: true, ...payload }
     },
-    
   },
   extraReducers: {
     [addJob.pending]: (state) => {

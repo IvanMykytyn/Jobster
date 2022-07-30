@@ -15,7 +15,7 @@ import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from 'react-icons/fa'
 
 // actions
 import { deleteJob } from '../feature/allJobs/allJobsSlice'
-import { handleChange, setEditJob } from '../feature/job/jobSlice'
+import { setEditJob } from '../feature/job/jobSlice'
 
 const Job = ({
   _id,

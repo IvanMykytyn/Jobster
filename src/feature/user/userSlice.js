@@ -19,26 +19,9 @@ const initialState = {
   isSidebarOpen: true,
 }
 
-export const registerUser = createAsyncThunk(
-  'user/registerUser',
-  async (user, thunkAPI) => {
-    return registerUserThunk(user, thunkAPI)
-  }
-)
-
-export const loginUser = createAsyncThunk(
-  'user/loginUser',
-  async (user, thunkAPI) => {
-    return loginUserThunk(user, thunkAPI)
-  }
-)
-
-export const updateUser = createAsyncThunk(
-  'user/updateUser',
-  async (user, thunkAPI) => {
-    return updateUserThunk(user, thunkAPI)
-  }
-)
+export const registerUser = createAsyncThunk('user/registerUser', registerUserThunk)
+export const loginUser = createAsyncThunk('user/loginUser', loginUserThunk)
+export const updateUser = createAsyncThunk('user/updateUser', updateUserThunk)
 
 const userSlice = createSlice({
   name: 'user',

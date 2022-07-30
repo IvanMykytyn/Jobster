@@ -10,6 +10,11 @@ import JobsContainer from './JobsContainer'
 import Job from './Job'
 import Loading from './_common/Loading'
 import JobInfo from './JobInfo'
+import ChartsContainer from './ChartsContainer'
+import StatsContainer from './StatsContainer'
+import StatItem from './StatItem'
+import AreaChart from './AreaChart'
+import BarChart from './BarChart'
 
 export {
   Logo,
@@ -24,4 +29,9 @@ export {
   Job,
   Loading,
   JobInfo,
+  StatsContainer,
+  ChartsContainer,
+  StatItem,
+  AreaChart,
+  BarChart,
 }
