@@ -11,7 +11,7 @@ import {
 import { toast } from 'react-toastify'
 
 // thunks
-import { registerUserThunk, loginUserThunk, updateUserThunk } from './userThunk'
+import { registerUserThunk, loginUserThunk, updateUserThunk, clearStoreThunk } from './userThunk'
 
 const initialState = {
   isLoading: false,
@@ -22,6 +22,7 @@ const initialState = {
 export const registerUser = createAsyncThunk('user/registerUser', registerUserThunk)
 export const loginUser = createAsyncThunk('user/loginUser', loginUserThunk)
 export const updateUser = createAsyncThunk('user/updateUser', updateUserThunk)
+export const clearStore = createAsyncThunk('allJobs/clearStore', clearStoreThunk)
 
 const userSlice = createSlice({
   name: 'user',
@@ -88,6 +89,11 @@ const userSlice = createSlice({
     [updateUser.rejected]: (state, { payload }) => {
       state.isLoading = false
       toast.error(payload)
+    },
+    
+    // clear store
+    [clearStore.rejected]: () => {
+      toast.error('There was an error');
     },
   },
 })

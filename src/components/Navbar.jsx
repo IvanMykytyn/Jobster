@@ -9,7 +9,7 @@ import { Logo } from './'
 import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa'
 
 // actions
-import { logout, toggleSidebar } from '../feature/user/userSlice'
+import { clearStore, toggleSidebar } from '../feature/user/userSlice'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -49,7 +49,7 @@ const Navbar = () => {
                 type="button"
                 className="dropdown-btn"
                 onClick={() => {
-                  dispatch(logout('Logging out...'))
+                  dispatch(clearStore('Logout Successful...'));
                 }}
               >
                 logout
