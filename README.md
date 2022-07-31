@@ -1,8 +1,9 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d0ecfa21-2da6-4246-a834-d146e8fd5008/deploy-status)](https://app.netlify.com/sites/your-jobster/deploys)
 # Jobster
 
 ### Track Your Job Search
 
-Project in Action - [Jobster]()
+Project in Action - [Jobster](https://your-jobster.netlify.app/)
 
 Same app as the [Jobify](https://github.com/VanekCheck/Jobify) but
 - created based on README from [John Smilga](https://github.com/john-smilga/redux-toolkit-jobster) repository
