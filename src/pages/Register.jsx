@@ -42,12 +42,12 @@ const Register = () => {
 
     const { name, email, password, isMember } = values
 
-    if (!email || !password || (isMember && !name)) {
+    if (!email || !password || (!isMember && !name)) {
       toast.error('Please Fill Out All Fields')
       return
     }
 
-    if (!isMember) {
+    if (isMember) {
       dispatch(loginUser({ email, password }))
     } else {
       dispatch(registerUser({ name, email, password }))
@@ -72,7 +72,7 @@ const Register = () => {
         <h3>Login</h3>
 
         {/* name field */}
-        {values.isMember && (
+        {!values.isMember && (
           <FormRow
             type="text"
             value={values.name}
